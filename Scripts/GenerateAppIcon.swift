@@ -10,8 +10,8 @@ guard let context = NSGraphicsContext.current?.cgContext else {
 
 let rect = CGRect(x: 0, y: 0, width: size, height: size)
 let colors = [
-    NSColor(red: 0.58, green: 0.36, blue: 0.91, alpha: 1).cgColor,
-    NSColor(red: 0.86, green: 0.35, blue: 0.76, alpha: 1).cgColor
+    NSColor(red: 0.9092, green: 0.6349, blue: 0.0, alpha: 1).cgColor,
+    NSColor(red: 0.8887, green: 0.7616, blue: 0.2331, alpha: 1).cgColor
 ] as CFArray
 let gradient = CGGradient(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: colors, locations: [0, 1])!
 context.drawLinearGradient(gradient, start: CGPoint(x: 0, y: size), end: CGPoint(x: size, y: 0), options: [])

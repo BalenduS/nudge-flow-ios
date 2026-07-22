@@ -16,32 +16,91 @@ private struct WelcomeView: View {
     @Bindable var model: AppModel
 
     var body: some View {
-        VStack {
-            Spacer()
-            VStack(spacing: 22) {
-                AppMark()
-                Text("Nudge & Flow")
-                    .font(.system(size: 28, weight: .bold))
-                    .foregroundStyle(NFTheme.text)
-                Text("Your calm, focused companion for intermittent fasting. Track your window, your progress, your way.")
-                    .font(.system(size: 17))
-                    .lineSpacing(5)
-                    .foregroundStyle(NFTheme.secondaryText)
-                    .multilineTextAlignment(.center)
-                    .frame(maxWidth: 290)
-            }
-            Spacer()
-            VStack(spacing: 12) {
-                GradientButton(title: "Get Started") {
-                    model.continueOnboarding()
+        ZStack {
+            RadialGradient(colors: [NFTheme.accent.opacity(0.34), .clear], center: .topTrailing, startRadius: 20, endRadius: 360)
+                .ignoresSafeArea()
+
+            VStack(spacing: 0) {
+                Spacer(minLength: 30)
+
+                VStack(spacing: 28) {
+                    ZStack {
+                        Circle()
+                            .stroke(NFTheme.accent.opacity(0.18), lineWidth: 22)
+                            .frame(width: 230, height: 230)
+                        Circle()
+                            .trim(from: 0.05, to: 0.74)
+                            .stroke(NFTheme.gradient, style: StrokeStyle(lineWidth: 18, lineCap: .round))
+                            .frame(width: 230, height: 230)
+                            .rotationEffect(.degrees(-90))
+
+                        VStack(spacing: 12) {
+                            AppMark(size: 76)
+                            Text("16:8")
+                                .font(.system(size: 40, weight: .black))
+                                .foregroundStyle(NFTheme.text)
+                            Text("Today’s flow")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(NFTheme.accentTwo)
+                        }
+                    }
+
+                    VStack(spacing: 12) {
+                        Text("Nudge & Flow")
+                            .font(.system(size: 36, weight: .black))
+                            .foregroundStyle(NFTheme.text)
+                        Text("Fast with momentum, log without stress, and learn what your body responds to.")
+                            .font(.system(size: 17, weight: .medium))
+                            .lineSpacing(5)
+                            .foregroundStyle(NFTheme.secondaryText)
+                            .multilineTextAlignment(.center)
+                            .frame(maxWidth: 320)
+                    }
+
+                    HStack(spacing: 10) {
+                        WelcomePill(symbol: "bell.badge.fill", title: "Stage nudges")
+                        WelcomePill(symbol: "plus.circle.fill", title: "Quick logs")
+                        WelcomePill(symbol: "chart.line.uptrend.xyaxis", title: "Patterns")
+                    }
                 }
-                Text("I already have an account")
-                    .font(.system(size: 14))
-                    .foregroundStyle(NFTheme.tertiaryText)
+                .padding(.horizontal, 24)
+
+                Spacer()
+
+                VStack(spacing: 12) {
+                    GradientButton(title: "Get Started") {
+                        model.continueOnboarding()
+                    }
+                    Text("I already have an account")
+                        .font(.system(size: 14))
+                        .foregroundStyle(NFTheme.tertiaryText)
+                }
+                .padding(.horizontal, 24)
+                .padding(.bottom, 24)
             }
-            .padding(.horizontal, 24)
-            .padding(.bottom, 24)
         }
+    }
+}
+
+private struct WelcomePill: View {
+    let symbol: String
+    let title: String
+
+    var body: some View {
+        VStack(spacing: 7) {
+            Image(systemName: symbol)
+                .font(.system(size: 16, weight: .bold))
+                .foregroundStyle(NFTheme.accent)
+            Text(title)
+                .font(.system(size: 11, weight: .bold))
+                .foregroundStyle(NFTheme.secondaryText)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 12)
+        .background(NFTheme.surface.opacity(0.84))
+        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }
 
@@ -295,121 +354,18 @@ struct NotificationsView: View {
             }
             Spacer()
             VStack(spacing: 12) {
-                GradientButton(title: "Allow Notifications") { model.showPaywall() }
-                Button("Not now") { model.showPaywall() }
+                GradientButton(title: "Allow Notifications") {
+                    Task {
+                        await FastingNotificationScheduler.requestAuthorization()
+                        model.completeOnboarding()
+                    }
+                }
+                Button("Not now") { model.completeOnboarding() }
                     .font(.system(size: 15))
                     .foregroundStyle(NFTheme.tertiaryText)
             }
             .padding(.horizontal, 24)
             .padding(.bottom, 24)
         }
-    }
-}
-
-struct PaywallView: View {
-    @Bindable var model: AppModel
-
-    var body: some View {
-        VStack(spacing: 0) {
-            HStack {
-                Spacer()
-                if model.openedPaywallFromProfile {
-                    Button {
-                        model.closePaywall()
-                    } label: {
-                        Image(systemName: "xmark")
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundStyle(NFTheme.secondaryText)
-                            .frame(width: 32, height: 32)
-                            .background(.white.opacity(0.08))
-                            .clipShape(Circle())
-                    }
-                }
-            }
-            .padding(.horizontal, 24)
-            .padding(.top, 20)
-
-            ScrollView {
-                VStack(spacing: 18) {
-                    Text("Unlock Premium")
-                        .font(.system(size: 28, weight: .black))
-                        .foregroundStyle(NFTheme.text)
-                    Text("7 days free, cancel anytime")
-                        .font(.system(size: 14))
-                        .foregroundStyle(NFTheme.secondaryText)
-
-                    VStack(spacing: 14) {
-                        PremiumBullet("Custom fasting plans that adapt to you")
-                        PremiumBullet("Detailed weight & fasting analytics")
-                        PremiumBullet("Full article library & recipes")
-                        PremiumBullet("No ads, ever")
-                    }
-                    .padding(.vertical, 8)
-
-                    HStack(spacing: 12) {
-                        PriceCard(title: "Monthly", price: "$9.99", highlighted: false)
-                        PriceCard(title: "Yearly", price: "$49.99", highlighted: true)
-                    }
-                }
-                .padding(.horizontal, 24)
-                .padding(.top, 18)
-            }
-
-            GradientButton(title: "Start Free Trial") {
-                model.closePaywall()
-            }
-            .padding(.horizontal, 24)
-            .padding(.vertical, 16)
-        }
-    }
-}
-
-private struct PremiumBullet: View {
-    let text: String
-    init(_ text: String) { self.text = text }
-
-    var body: some View {
-        HStack(spacing: 12) {
-            Circle().fill(NFTheme.accent).frame(width: 20, height: 20)
-            Text(text)
-                .font(.system(size: 15))
-                .foregroundStyle(NFTheme.text.opacity(0.85))
-            Spacer()
-        }
-    }
-}
-
-private struct PriceCard: View {
-    let title: String
-    let price: String
-    let highlighted: Bool
-
-    var body: some View {
-        VStack(spacing: 6) {
-            if highlighted {
-                Text("BEST VALUE")
-                    .font(.system(size: 10, weight: .bold))
-                    .foregroundStyle(.white)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 3)
-                    .background(NFTheme.accentTwo)
-                    .clipShape(Capsule())
-                    .offset(y: -10)
-            }
-            Text(title)
-                .font(.system(size: 13))
-                .foregroundStyle(NFTheme.secondaryText)
-            Text(price)
-                .font(.system(size: 20, weight: .bold))
-                .foregroundStyle(NFTheme.text)
-        }
-        .frame(maxWidth: .infinity)
-        .frame(height: 112)
-        .background(highlighted ? NFTheme.surfaceRaised : NFTheme.surface)
-        .overlay(
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(highlighted ? NFTheme.accent : .clear, lineWidth: 2)
-        )
-        .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }

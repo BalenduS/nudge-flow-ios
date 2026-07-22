@@ -1,7 +1,13 @@
 import SwiftUI
+import UIKit
 
 struct ProfileView: View {
     @Bindable var model: AppModel
+    @Bindable var auth: AuthModel
+    @State private var exportURL: URL?
+    @State private var showingExportSheet = false
+    @State private var showingAuthSheet = false
+    @State private var exportError: String?
 
     var body: some View {
         ScreenScroll(title: nil) {
@@ -28,23 +34,84 @@ struct ProfileView: View {
             }
 
             VStack(spacing: 0) {
+                SettingsRow(title: "Account", detail: auth.isSignedIn ? auth.email : "Sign in") {
+                    showingAuthSheet = true
+                }
+                SettingsRow(title: "Sync", detail: auth.isSignedIn ? "Now" : "Off", showsChevron: auth.isSignedIn) {
+                    guard auth.isSignedIn else {
+                        showingAuthSheet = true
+                        return
+                    }
+                    Task { await auth.sync(appModel: model) }
+                }
                 SettingsRow(title: "Fasting Plan", detail: model.selectedPlan.rawValue) {
                     model.showPlanSelection(fromProfile: true)
                 }
-                SettingsRow(title: "Subscription", detail: "PREMIUM", detailStyle: .premium) {
-                    model.showPaywall(fromProfile: true)
-                }
+                SettingsRow(title: "Subscription", detail: "Free Plan", showsChevron: false) {}
                 SettingsRow(title: "Units", detail: model.units.rawValue) {
                     model.toggleUnits()
                 }
+                SettingsRow(title: "Export Data", detail: "CSV") {
+                    exportData()
+                }
                 SettingsRow(title: "Reminders", detail: nil) {}
                 SettingsRow(title: "Help & Support", detail: nil) {}
-                SettingsRow(title: "Log Out", destructive: true, showsDivider: false) {}
+                SettingsRow(title: auth.isSignedIn ? "Log Out" : "Create Account", destructive: auth.isSignedIn, showsDivider: false) {
+                    if auth.isSignedIn {
+                        Task { await auth.signOut() }
+                    } else {
+                        showingAuthSheet = true
+                    }
+                }
             }
             .background(NFTheme.surface)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+
+            if let error = auth.errorMessage {
+                Text(error)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundStyle(NFTheme.destructive)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 2)
+            }
+        }
+        .sheet(isPresented: $showingExportSheet) {
+            if let exportURL {
+                ShareSheet(items: [exportURL])
+                    .presentationDetents([.medium, .large])
+            }
+        }
+        .sheet(isPresented: $showingAuthSheet) {
+            AuthView(auth: auth, model: model)
+        }
+        .alert("Could not export data", isPresented: Binding(
+            get: { exportError != nil },
+            set: { if !$0 { exportError = nil } }
+        )) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(exportError ?? "Please try again.")
         }
     }
+
+    private func exportData() {
+        do {
+            exportURL = try DataExportService.makeCSVFile(model: model)
+            showingExportSheet = true
+        } catch {
+            exportError = error.localizedDescription
+        }
+    }
+}
+
+private struct ShareSheet: UIViewControllerRepresentable {
+    let items: [Any]
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: items, applicationActivities: nil)
+    }
+
+    func updateUIViewController(_ uiViewController: UIActivityViewController, context: Context) {}
 }
 
 private struct MiniProfileStat: View {
@@ -78,6 +145,7 @@ private struct SettingsRow: View {
     var destructive = false
     var detailStyle: DetailStyle = .plain
     var showsDivider = true
+    var showsChevron = true
     var action: () -> Void
 
     var body: some View {
@@ -97,7 +165,7 @@ private struct SettingsRow: View {
                             .background(detailStyle == .premium ? AnyShapeStyle(NFTheme.gradient) : AnyShapeStyle(.clear))
                             .clipShape(Capsule())
                     }
-                    if !destructive {
+                    if !destructive && showsChevron {
                         Image(systemName: "chevron.right")
                             .font(.system(size: 11, weight: .bold))
                             .foregroundStyle(NFTheme.tertiaryText)

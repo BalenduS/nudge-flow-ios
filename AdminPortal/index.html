@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nudge & Flow Admin</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-mark">NF</div>
+      <div>
+        <div class="brand-title">Nudge & Flow</div>
+        <div class="brand-subtitle">Admin Portal</div>
+      </div>
+    </div>
+
+    <nav class="nav" aria-label="Admin navigation">
+      <button class="nav-item active" data-section="overview">Overview</button>
+      <button class="nav-item" data-section="users">Users</button>
+      <button class="nav-item" data-section="subscriptions">Subscriptions</button>
+      <button class="nav-item" data-section="learn">Learn CMS</button>
+      <button class="nav-item" data-section="notifications">Notifications</button>
+      <button class="nav-item" data-section="privacy">Privacy Requests</button>
+      <button class="nav-item" data-section="audit">Audit Log</button>
+      <button class="nav-item" data-section="settings">Settings</button>
+    </nav>
+
+    <div class="sidebar-note">
+      <span class="note-dot"></span>
+      Protected data mode: user-level logs require support reason.
+    </div>
+  </aside>
+
+  <main class="shell">
+    <header class="topbar">
+      <div>
+        <div class="eyeline">Operations</div>
+        <h1 id="sectionTitle">Overview</h1>
+      </div>
+      <div class="topbar-actions">
+        <label class="search">
+          <span>Search</span>
+          <input id="searchInput" type="search" placeholder="User, email, request, article">
+        </label>
+        <div class="role-pill">Owner</div>
+        <div class="avatar">B</div>
+      </div>
+    </header>
+
+    <section id="overview" class="section active">
+      <div class="kpi-grid">
+        <article class="kpi">
+          <span class="kpi-label">Active users</span>
+          <strong>2,418</strong>
+          <small>+14.2% this month</small>
+        </article>
+        <article class="kpi">
+          <span class="kpi-label">Fasts started</span>
+          <strong>18,904</strong>
+          <small>67% notification opt-in</small>
+        </article>
+        <article class="kpi">
+          <span class="kpi-label">Widget logs</span>
+          <strong>42,118</strong>
+          <small>Water is 46% of logs</small>
+        </article>
+        <article class="kpi">
+          <span class="kpi-label">Privacy queue</span>
+          <strong>12</strong>
+          <small>3 export requests today</small>
+        </article>
+      </div>
+
+      <div class="dashboard-grid">
+        <article class="panel wide">
+          <div class="panel-header">
+            <div>
+              <h2>Fasting activity</h2>
+              <p>Starts, completions, and stage milestones across the last 7 days.</p>
+            </div>
+            <button class="quiet-button">View report</button>
+          </div>
+          <div class="bar-chart" id="fastingChart"></div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Notification health</h2>
+              <p>Stage nudges and reminder delivery.</p>
+            </div>
+          </div>
+          <div class="health-list">
+            <div><span>Stage nudges</span><strong>96.4%</strong></div>
+            <div><span>Break-fast reminders</span><strong>91.1%</strong></div>
+            <div><span>Opt-out rate</span><strong>2.8%</strong></div>
+            <div><span>Failed sends</span><strong>37</strong></div>
+          </div>
+        </article>
+
+        <article class="panel wide">
+          <div class="panel-header">
+            <div>
+              <h2>Recent users</h2>
+              <p>Searchable account operations surface.</p>
+            </div>
+            <button class="quiet-button" data-jump="users">Open users</button>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Plan</th>
+                  <th>Last active</th>
+                  <th>Widget logs</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="overviewUsers"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <article class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Privacy queue</h2>
+              <p>Export and delete requests.</p>
+            </div>
+          </div>
+          <div class="request-list" id="privacyPreview"></div>
+        </article>
+      </div>
+    </section>
+
+    <section id="users" class="section">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Users</h2>
+            <p>Account status, entitlements, sync, and support controls.</p>
+          </div>
+          <button class="primary-button">Invite admin</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Plan</th>
+                <th>Signup</th>
+                <th>Last active</th>
+                <th>Support gate</th>
+              </tr>
+            </thead>
+            <tbody id="usersTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="subscriptions" class="section">
+      <div class="dashboard-grid">
+        <article class="panel">
+          <h2>Plan mix</h2>
+          <div class="metric-stack">
+            <div><span>Free Plan</span><strong>2,091</strong></div>
+            <div><span>Premium</span><strong>327</strong></div>
+            <div><span>Trial</span><strong>84</strong></div>
+          </div>
+        </article>
+        <article class="panel wide">
+          <h2>Entitlement events</h2>
+          <div class="request-list">
+            <div class="request"><strong>Premium trial started</strong><span>Aarav Mehta · today</span></div>
+            <div class="request"><strong>Free Plan downgrade</strong><span>Priya Rao · yesterday</span></div>
+            <div class="request"><strong>Renewal failed</strong><span>Maya Shah · 2 days ago</span></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="learn" class="section">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Learn CMS</h2>
+            <p>Manage articles, categories, featured content, and behavior-triggered recommendations.</p>
+          </div>
+          <button class="primary-button">New article</button>
+        </div>
+        <div class="content-grid" id="articleGrid"></div>
+      </div>
+    </section>
+
+    <section id="notifications" class="section">
+      <div class="dashboard-grid">
+        <article class="panel wide">
+          <h2>Stage notification templates</h2>
+          <div class="template-list">
+            <div><strong>Fat Burning</strong><span>Nice progress. Your body is shifting gears.</span></div>
+            <div><strong>Ketosis</strong><span>You are deep into the fast now. Stay hydrated and keep going.</span></div>
+            <div><strong>Fat Loss</strong><span>Strong work. You have reached a key fasting milestone.</span></div>
+            <div><strong>Autophagy</strong><span>A serious milestone. Listen to your body and finish with care.</span></div>
+          </div>
+        </article>
+        <article class="panel">
+          <h2>Delivery metrics</h2>
+          <div class="metric-stack">
+            <div><span>Delivered</span><strong>98.2%</strong></div>
+            <div><span>Opened</span><strong>41.7%</strong></div>
+            <div><span>Muted</span><strong>2.8%</strong></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="privacy" class="section">
+      <div class="panel">
+        <div class="panel-header">
+          <div>
+            <h2>Export and delete requests</h2>
+            <p>Privacy-sensitive workflows with audit trail.</p>
+          </div>
+        </div>
+        <div class="request-list" id="privacyRequests"></div>
+      </div>
+    </section>
+
+    <section id="audit" class="section">
+      <div class="panel">
+        <h2>Audit log</h2>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Time</th>
+                <th>Actor</th>
+                <th>Action</th>
+                <th>Target</th>
+                <th>Reason</th>
+              </tr>
+            </thead>
+            <tbody id="auditTable"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="settings" class="section">
+      <div class="dashboard-grid">
+        <article class="panel">
+          <h2>Roles</h2>
+          <div class="template-list">
+            <div><strong>Owner</strong><span>Full product and billing access.</span></div>
+            <div><strong>Admin</strong><span>Users, content, notifications.</span></div>
+            <div><strong>Support</strong><span>Support-gated user detail only.</span></div>
+            <div><strong>Content editor</strong><span>Learn CMS only.</span></div>
+          </div>
+        </article>
+        <article class="panel wide">
+          <h2>Security checklist</h2>
+          <div class="check-list">
+            <label><input type="checkbox" checked> Row-Level Security enabled on user-owned data</label>
+            <label><input type="checkbox" checked> Admin action audit log required</label>
+            <label><input type="checkbox"> Supabase project connected</label>
+            <label><input type="checkbox"> Stripe entitlement sync connected</label>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

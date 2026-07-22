@@ -7,8 +7,8 @@ enum NFTheme {
     static let text = Color(red: 0.961, green: 0.953, blue: 0.973)
     static let secondaryText = text.opacity(0.62)
     static let tertiaryText = text.opacity(0.42)
-    static let accent = Color(red: 0.58, green: 0.36, blue: 0.91)
-    static let accentTwo = Color(red: 0.86, green: 0.35, blue: 0.76)
+    static let accent = Color(red: 0.9092, green: 0.6349, blue: 0.0)
+    static let accentTwo = Color(red: 0.8887, green: 0.7616, blue: 0.2331)
     static let destructive = Color(red: 0.95, green: 0.29, blue: 0.22)
 
     static let gradient = LinearGradient(

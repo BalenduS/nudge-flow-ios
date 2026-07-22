@@ -18,7 +18,44 @@
 		8F1A001F2C50100100NF0001 /* LearnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A001E2C50100100NF0001 /* LearnView.swift */; };
 		8F1A00212C50100100NF0001 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00202C50100100NF0001 /* ProfileView.swift */; };
 		8F1A00232C50100100NF0001 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8F1A00222C50100100NF0001 /* Assets.xcassets */; };
+		8F1A00312C50100100NF0001 /* SharedConsumptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00302C50100100NF0001 /* SharedConsumptionStore.swift */; };
+		8F1A00332C50100100NF0001 /* NudgeFlowWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00322C50100100NF0001 /* NudgeFlowWidget.swift */; };
+		8F1A00342C50100100NF0001 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00102C50100100NF0001 /* AppModel.swift */; };
+		8F1A00352C50100100NF0001 /* SharedConsumptionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00302C50100100NF0001 /* SharedConsumptionStore.swift */; };
+		8F1A00362C50100100NF0001 /* NudgeFlowWidget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 8F1A00372C50100100NF0001 /* NudgeFlowWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8F1A00482C50100100NF0001 /* FastingStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00472C50100100NF0001 /* FastingStage.swift */; };
+		8F1A004A2C50100100NF0001 /* FastingNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00492C50100100NF0001 /* FastingNotificationScheduler.swift */; };
+		8F1A004D2C50100100NF0001 /* DataExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A004C2C50100100NF0001 /* DataExportService.swift */; };
+		8F1A00512C50100100NF0001 /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00502C50100100NF0001 /* SupabaseConfig.swift */; };
+		8F1A00532C50100100NF0001 /* SupabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00522C50100100NF0001 /* SupabaseClient.swift */; };
+		8F1A00552C50100100NF0001 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00542C50100100NF0001 /* AuthModel.swift */; };
+		8F1A00572C50100100NF0001 /* AppSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00562C50100100NF0001 /* AppSyncService.swift */; };
+		8F1A00592C50100100NF0001 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00582C50100100NF0001 /* AuthView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8F1A00382C50100100NF0001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8F1A00022C50100100NF0001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8F1A003E2C50100100NF0001;
+			remoteInfo = NudgeFlowWidget;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8F1A00392C50100100NF0001 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				8F1A00362C50100100NF0001 /* NudgeFlowWidget.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8F1A000A2C50100100NF0001 /* NudgeFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NudgeFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,13 +70,31 @@
 		8F1A001E2C50100100NF0001 /* LearnView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnView.swift; sourceTree = "<group>"; };
 		8F1A00202C50100100NF0001 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		8F1A00222C50100100NF0001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8F1A002F2C50100100NF0001 /* NudgeFlow.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NudgeFlow.entitlements; sourceTree = "<group>"; };
+		8F1A00302C50100100NF0001 /* SharedConsumptionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedConsumptionStore.swift; sourceTree = "<group>"; };
+		8F1A00322C50100100NF0001 /* NudgeFlowWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NudgeFlowWidget.swift; sourceTree = "<group>"; };
+		8F1A00372C50100100NF0001 /* NudgeFlowWidget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = NudgeFlowWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		8F1A003A2C50100100NF0001 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8F1A003B2C50100100NF0001 /* NudgeFlowWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NudgeFlowWidget.entitlements; sourceTree = "<group>"; };
+		8F1A00472C50100100NF0001 /* FastingStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingStage.swift; sourceTree = "<group>"; };
+		8F1A00492C50100100NF0001 /* FastingNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingNotificationScheduler.swift; sourceTree = "<group>"; };
+		8F1A004C2C50100100NF0001 /* DataExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExportService.swift; sourceTree = "<group>"; };
+		8F1A00502C50100100NF0001 /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
+		8F1A00522C50100100NF0001 /* SupabaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClient.swift; sourceTree = "<group>"; };
+		8F1A00542C50100100NF0001 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
+		8F1A00562C50100100NF0001 /* AppSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSyncService.swift; sourceTree = "<group>"; };
+		8F1A00582C50100100NF0001 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		8F1A00072C50100100NF0001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F1A003C2C50100100NF0001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -53,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				8F1A000D2C50100100NF0001 /* NudgeFlow */,
+				8F1A003D2C50100100NF0001 /* NudgeFlowWidget */,
 				8F1A000B2C50100100NF0001 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -61,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				8F1A000A2C50100100NF0001 /* NudgeFlow.app */,
+				8F1A00372C50100100NF0001 /* NudgeFlowWidget.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -69,7 +126,11 @@
 			isa = PBXGroup;
 			children = (
 				8F1A000E2C50100100NF0001 /* NudgeFlowApp.swift */,
+				8F1A002F2C50100100NF0001 /* NudgeFlow.entitlements */,
+				8F1A004E2C50100100NF0001 /* Config */,
 				8F1A00242C50100100NF0001 /* Models */,
+				8F1A00402C50100100NF0001 /* Shared */,
+				8F1A004B2C50100100NF0001 /* Services */,
 				8F1A00252C50100100NF0001 /* Views */,
 				8F1A00222C50100100NF0001 /* Assets.xcassets */,
 			);
@@ -88,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				8F1A00122C50100100NF0001 /* DesignSystem.swift */,
+				8F1A00582C50100100NF0001 /* AuthView.swift */,
 				8F1A00142C50100100NF0001 /* OnboardingView.swift */,
 				8F1A00162C50100100NF0001 /* MainTabView.swift */,
 				8F1A00182C50100100NF0001 /* HomeView.swift */,
@@ -97,6 +159,45 @@
 				8F1A00202C50100100NF0001 /* ProfileView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		8F1A004E2C50100100NF0001 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				8F1A00502C50100100NF0001 /* SupabaseConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		8F1A003D2C50100100NF0001 /* NudgeFlowWidget */ = {
+			isa = PBXGroup;
+			children = (
+				8F1A00322C50100100NF0001 /* NudgeFlowWidget.swift */,
+				8F1A003A2C50100100NF0001 /* Info.plist */,
+				8F1A003B2C50100100NF0001 /* NudgeFlowWidget.entitlements */,
+			);
+			path = NudgeFlowWidget;
+			sourceTree = "<group>";
+		};
+		8F1A00402C50100100NF0001 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				8F1A00302C50100100NF0001 /* SharedConsumptionStore.swift */,
+				8F1A00472C50100100NF0001 /* FastingStage.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		8F1A004B2C50100100NF0001 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				8F1A00492C50100100NF0001 /* FastingNotificationScheduler.swift */,
+				8F1A004C2C50100100NF0001 /* DataExportService.swift */,
+				8F1A00522C50100100NF0001 /* SupabaseClient.swift */,
+				8F1A00542C50100100NF0001 /* AuthModel.swift */,
+				8F1A00562C50100100NF0001 /* AppSyncService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -109,15 +210,34 @@
 				8F1A00062C50100100NF0001 /* Sources */,
 				8F1A00072C50100100NF0001 /* Frameworks */,
 				8F1A00082C50100100NF0001 /* Resources */,
+				8F1A00392C50100100NF0001 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				8F1A003F2C50100100NF0001 /* PBXTargetDependency */,
 			);
 			name = NudgeFlow;
 			productName = NudgeFlow;
 			productReference = 8F1A000A2C50100100NF0001 /* NudgeFlow.app */;
 			productType = "com.apple.product-type.application";
+		};
+		8F1A003E2C50100100NF0001 /* NudgeFlowWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F1A00442C50100100NF0001 /* Build configuration list for PBXNativeTarget "NudgeFlowWidget" */;
+			buildPhases = (
+				8F1A00412C50100100NF0001 /* Sources */,
+				8F1A003C2C50100100NF0001 /* Frameworks */,
+				8F1A00422C50100100NF0001 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NudgeFlowWidget;
+			productName = NudgeFlowWidget;
+			productReference = 8F1A00372C50100100NF0001 /* NudgeFlowWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -130,6 +250,9 @@
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					8F1A00092C50100100NF0001 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					8F1A003E2C50100100NF0001 = {
 						CreatedOnToolsVersion = 26.6;
 					};
 				};
@@ -149,6 +272,7 @@
 			projectRoot = "";
 			targets = (
 				8F1A00092C50100100NF0001 /* NudgeFlow */,
+				8F1A003E2C50100100NF0001 /* NudgeFlowWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -159,6 +283,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				8F1A00232C50100100NF0001 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F1A00422C50100100NF0001 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,10 +310,37 @@
 				8F1A001D2C50100100NF0001 /* TrackView.swift in Sources */,
 				8F1A001F2C50100100NF0001 /* LearnView.swift in Sources */,
 				8F1A00212C50100100NF0001 /* ProfileView.swift in Sources */,
+				8F1A00312C50100100NF0001 /* SharedConsumptionStore.swift in Sources */,
+				8F1A00482C50100100NF0001 /* FastingStage.swift in Sources */,
+				8F1A004A2C50100100NF0001 /* FastingNotificationScheduler.swift in Sources */,
+				8F1A004D2C50100100NF0001 /* DataExportService.swift in Sources */,
+				8F1A00512C50100100NF0001 /* SupabaseConfig.swift in Sources */,
+				8F1A00532C50100100NF0001 /* SupabaseClient.swift in Sources */,
+				8F1A00552C50100100NF0001 /* AuthModel.swift in Sources */,
+				8F1A00572C50100100NF0001 /* AppSyncService.swift in Sources */,
+				8F1A00592C50100100NF0001 /* AuthView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F1A00412C50100100NF0001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8F1A00332C50100100NF0001 /* NudgeFlowWidget.swift in Sources */,
+				8F1A00342C50100100NF0001 /* AppModel.swift in Sources */,
+				8F1A00352C50100100NF0001 /* SharedConsumptionStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8F1A003F2C50100100NF0001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8F1A003E2C50100100NF0001 /* NudgeFlowWidget */;
+			targetProxy = 8F1A00382C50100100NF0001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		8F1A00262C50100100NF0001 /* Debug */ = {
@@ -303,10 +461,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NudgeFlow/NudgeFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 575S4VSL4P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Nudge & Flow";
@@ -329,10 +488,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = NudgeFlow/NudgeFlow.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 575S4VSL4P;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = "Nudge & Flow";
@@ -344,6 +504,46 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.balendu.NudgeFlow;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		8F1A00452C50100100NF0001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = NudgeFlowWidget/NudgeFlowWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 575S4VSL4P;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NudgeFlowWidget/Info.plist;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.balendu.NudgeFlow.NudgeFlowWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		8F1A00462C50100100NF0001 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = NudgeFlowWidget/NudgeFlowWidget.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 575S4VSL4P;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = NudgeFlowWidget/Info.plist;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.balendu.NudgeFlow.NudgeFlowWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -367,6 +567,15 @@
 			buildConfigurations = (
 				8F1A002D2C50100100NF0001 /* Debug */,
 				8F1A002E2C50100100NF0001 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8F1A00442C50100100NF0001 /* Build configuration list for PBXNativeTarget "NudgeFlowWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8F1A00452C50100100NF0001 /* Debug */,
+				8F1A00462C50100100NF0001 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
