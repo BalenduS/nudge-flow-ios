@@ -26,11 +26,6 @@
 		8F1A00482C50100100NF0001 /* FastingStage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00472C50100100NF0001 /* FastingStage.swift */; };
 		8F1A004A2C50100100NF0001 /* FastingNotificationScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00492C50100100NF0001 /* FastingNotificationScheduler.swift */; };
 		8F1A004D2C50100100NF0001 /* DataExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A004C2C50100100NF0001 /* DataExportService.swift */; };
-		8F1A00512C50100100NF0001 /* SupabaseConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00502C50100100NF0001 /* SupabaseConfig.swift */; };
-		8F1A00532C50100100NF0001 /* SupabaseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00522C50100100NF0001 /* SupabaseClient.swift */; };
-		8F1A00552C50100100NF0001 /* AuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00542C50100100NF0001 /* AuthModel.swift */; };
-		8F1A00572C50100100NF0001 /* AppSyncService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00562C50100100NF0001 /* AppSyncService.swift */; };
-		8F1A00592C50100100NF0001 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8F1A00582C50100100NF0001 /* AuthView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -79,11 +74,6 @@
 		8F1A00472C50100100NF0001 /* FastingStage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingStage.swift; sourceTree = "<group>"; };
 		8F1A00492C50100100NF0001 /* FastingNotificationScheduler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FastingNotificationScheduler.swift; sourceTree = "<group>"; };
 		8F1A004C2C50100100NF0001 /* DataExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataExportService.swift; sourceTree = "<group>"; };
-		8F1A00502C50100100NF0001 /* SupabaseConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseConfig.swift; sourceTree = "<group>"; };
-		8F1A00522C50100100NF0001 /* SupabaseClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupabaseClient.swift; sourceTree = "<group>"; };
-		8F1A00542C50100100NF0001 /* AuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthModel.swift; sourceTree = "<group>"; };
-		8F1A00562C50100100NF0001 /* AppSyncService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSyncService.swift; sourceTree = "<group>"; };
-		8F1A00582C50100100NF0001 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,7 +117,6 @@
 			children = (
 				8F1A000E2C50100100NF0001 /* NudgeFlowApp.swift */,
 				8F1A002F2C50100100NF0001 /* NudgeFlow.entitlements */,
-				8F1A004E2C50100100NF0001 /* Config */,
 				8F1A00242C50100100NF0001 /* Models */,
 				8F1A00402C50100100NF0001 /* Shared */,
 				8F1A004B2C50100100NF0001 /* Services */,
@@ -149,7 +138,6 @@
 			isa = PBXGroup;
 			children = (
 				8F1A00122C50100100NF0001 /* DesignSystem.swift */,
-				8F1A00582C50100100NF0001 /* AuthView.swift */,
 				8F1A00142C50100100NF0001 /* OnboardingView.swift */,
 				8F1A00162C50100100NF0001 /* MainTabView.swift */,
 				8F1A00182C50100100NF0001 /* HomeView.swift */,
@@ -159,14 +147,6 @@
 				8F1A00202C50100100NF0001 /* ProfileView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		8F1A004E2C50100100NF0001 /* Config */ = {
-			isa = PBXGroup;
-			children = (
-				8F1A00502C50100100NF0001 /* SupabaseConfig.swift */,
-			);
-			path = Config;
 			sourceTree = "<group>";
 		};
 		8F1A003D2C50100100NF0001 /* NudgeFlowWidget */ = {
@@ -193,9 +173,6 @@
 			children = (
 				8F1A00492C50100100NF0001 /* FastingNotificationScheduler.swift */,
 				8F1A004C2C50100100NF0001 /* DataExportService.swift */,
-				8F1A00522C50100100NF0001 /* SupabaseClient.swift */,
-				8F1A00542C50100100NF0001 /* AuthModel.swift */,
-				8F1A00562C50100100NF0001 /* AppSyncService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -314,11 +291,6 @@
 				8F1A00482C50100100NF0001 /* FastingStage.swift in Sources */,
 				8F1A004A2C50100100NF0001 /* FastingNotificationScheduler.swift in Sources */,
 				8F1A004D2C50100100NF0001 /* DataExportService.swift in Sources */,
-				8F1A00512C50100100NF0001 /* SupabaseConfig.swift in Sources */,
-				8F1A00532C50100100NF0001 /* SupabaseClient.swift in Sources */,
-				8F1A00552C50100100NF0001 /* AuthModel.swift in Sources */,
-				8F1A00572C50100100NF0001 /* AppSyncService.swift in Sources */,
-				8F1A00592C50100100NF0001 /* AuthView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

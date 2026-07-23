@@ -7,24 +7,23 @@
 
 ## Accounts
 
-- Add account creation and sign-in.
-- Recommended first implementation: Sign in with Apple plus iCloud/CloudKit sync for a privacy-forward iOS app.
-- Alternative implementation: Supabase Auth if cross-platform/web admin tooling is needed earlier.
+- Do not require app account creation or sign-in.
+- Add optional iCloud/CloudKit backup for restore and Apple-device sync.
+- Keep Sign in with Apple and Supabase Auth as future options only if cross-platform accounts become necessary.
 
 ## Admin Portal
 
-- Build an internal web dashboard after accounts and synced persistence exist.
-- Recommended backend path: Supabase Auth + Postgres + Row-Level Security.
+- Build an internal web dashboard for content and product operations.
+- Recommended backend path: Supabase Auth for admins only + Postgres + Row-Level Security.
 - Add role-based access: owner, admin, support, content editor.
-- Add admin screens for overview, users, user detail, subscriptions, Learn content, notifications, export/delete requests, and audit logs.
+- Add admin screens for overview, Learn content, notification templates, remote config, announcements, and audit logs.
 - Add a content CMS for Learn articles and behavior-triggered article recommendations.
-- Keep user-level fasting/consumption details protected behind support-reason prompts and audit logging.
-- Track aggregate metrics: active users, retention, fasting starts, widget logs, notification opt-ins, exports, and delete requests.
-- Do not build the admin portal against local-only app data; ship backend sync first.
+- Do not expose user-level fasting/consumption details by default; app data is local-first.
+- Track only aggregate, opt-in metrics if analytics are added later.
 
 ## Widgets
 
 - Add a WidgetKit extension for fast logging from the Home Screen or Lock Screen.
-- Store consumption entries in shared persistence before the widget ships, likely SwiftData plus an App Group container.
+- Store consumption entries in shared local persistence before the widget ships, likely SwiftData plus an App Group container.
 - Reuse the in-app consumption categories: Meal, Snack, Water, Drink, and Caffeine.
 - Add App Intents for quick actions such as "Log Water" and "Log Consumption" once the shared store exists.

@@ -3,11 +3,10 @@ import SwiftUI
 @main
 struct NudgeFlowApp: App {
     @State private var model = AppModel()
-    @State private var auth = AuthModel()
 
     var body: some Scene {
         WindowGroup {
-            RootView(model: model, auth: auth)
+            RootView(model: model)
                 .preferredColorScheme(.dark)
         }
     }
@@ -15,7 +14,6 @@ struct NudgeFlowApp: App {
 
 private struct RootView: View {
     @Bindable var model: AppModel
-    @Bindable var auth: AuthModel
 
     var body: some View {
         ZStack {
@@ -33,7 +31,7 @@ private struct RootView: View {
             case .notifications:
                 NotificationsView(model: model)
             case .app:
-                MainTabView(model: model, auth: auth)
+                MainTabView(model: model)
             }
         }
     }

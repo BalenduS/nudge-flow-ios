@@ -71,8 +71,8 @@ private struct WelcomeView: View {
                     GradientButton(title: "Get Started") {
                         model.continueOnboarding()
                     }
-                    Text("I already have an account")
-                        .font(.system(size: 14))
+                    Text("Your data stays on this iPhone. Export anytime.")
+                        .font(.system(size: 14, weight: .semibold))
                         .foregroundStyle(NFTheme.tertiaryText)
                 }
                 .padding(.horizontal, 24)

@@ -2,7 +2,6 @@ import SwiftUI
 
 struct MainTabView: View {
     @Bindable var model: AppModel
-    @Bindable var auth: AuthModel
 
     var body: some View {
         TabView(selection: $model.activeTab) {
@@ -14,7 +13,7 @@ struct MainTabView: View {
                 .tabItem { Label(AppTab.progress.rawValue, systemImage: AppTab.progress.symbol) }
                 .tag(AppTab.progress)
 
-            TrackView(model: model, auth: auth)
+            TrackView(model: model)
                 .tabItem { Label(AppTab.track.rawValue, systemImage: AppTab.track.symbol) }
                 .tag(AppTab.track)
 
@@ -22,7 +21,7 @@ struct MainTabView: View {
                 .tabItem { Label(AppTab.learn.rawValue, systemImage: AppTab.learn.symbol) }
                 .tag(AppTab.learn)
 
-            ProfileView(model: model, auth: auth)
+            ProfileView(model: model)
                 .tabItem { Label(AppTab.profile.rawValue, systemImage: AppTab.profile.symbol) }
                 .tag(AppTab.profile)
         }

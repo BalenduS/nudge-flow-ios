@@ -5,31 +5,62 @@ import Observation
 @Observable
 @MainActor
 final class AppModel {
-    var screen: AppScreen = .quiz
-    var onboardingStep = 0
-    var name = ""
-    var goal: Goal = .lose
-    var gender: Gender = .female
-    var ageRange: AgeRange = .twentyFiveToThirtyFour
-    var heightCm = 170
-    var weightKg = 78.0
-    var activity: ActivityLevel = .light
-    var experience: Experience = .beginner
-    var selectedPlan: FastingPlan = .sixteenEight
+    private var persistenceReady = false
+
+    var screen: AppScreen = .quiz { didSet { persistIfReady() } }
+    var onboardingStep = 0 { didSet { persistIfReady() } }
+    var name = "" { didSet { persistIfReady() } }
+    var goal: Goal = .lose { didSet { persistIfReady() } }
+    var gender: Gender = .female { didSet { persistIfReady() } }
+    var ageRange: AgeRange = .twentyFiveToThirtyFour { didSet { persistIfReady() } }
+    var heightCm = 170 { didSet { persistIfReady() } }
+    var weightKg = 78.0 { didSet { persistIfReady() } }
+    var activity: ActivityLevel = .light { didSet { persistIfReady() } }
+    var experience: Experience = .beginner { didSet { persistIfReady() } }
+    var selectedPlan: FastingPlan = .sixteenEight { didSet { persistIfReady() } }
     var openedPlansFromProfile = false
-    var activeTab: AppTab = .home
-    var units: UnitSystem = .metric
-    var fasting = FastingSession()
-    var water = 4
-    var weightLog = [78.4, 78.1, 77.9, 77.6, 77.2, 77.0, 78.0]
-    var mood: Mood?
+    var activeTab: AppTab = .home { didSet { persistIfReady() } }
+    var units: UnitSystem = .metric { didSet { persistIfReady() } }
+    var fasting = FastingSession() { didSet { persistIfReady() } }
+    var water = 4 { didSet { persistIfReady() } }
+    var weightLog = [78.4, 78.1, 77.9, 77.6, 77.2, 77.0, 78.0] { didSet { persistIfReady() } }
+    var mood: Mood? { didSet { persistIfReady() } }
     var intakeName = ""
-    var intakeCategory: ConsumptionCategory = .meal
-    var intakeEntries: [ConsumptionEntry]
+    var intakeCategory: ConsumptionCategory = .meal { didSet { persistIfReady() } }
+    var intakeEntries: [ConsumptionEntry] { didSet { persistIfReady() } }
 
     init() {
+        if let snapshot = AppPersistenceStore.load() {
+            screen = snapshot.screen
+            onboardingStep = snapshot.onboardingStep
+            name = snapshot.name
+            goal = snapshot.goal
+            gender = snapshot.gender
+            ageRange = snapshot.ageRange
+            heightCm = snapshot.heightCm
+            weightKg = snapshot.weightKg
+            activity = snapshot.activity
+            experience = snapshot.experience
+            selectedPlan = snapshot.selectedPlan
+            activeTab = snapshot.activeTab
+            units = snapshot.units
+            fasting = snapshot.fasting
+            water = snapshot.water
+            weightLog = snapshot.weightLog
+            mood = snapshot.mood
+            intakeCategory = snapshot.intakeCategory
+        }
+
         let storedEntries = SharedConsumptionStore.loadRecords().map(ConsumptionEntry.init(record:))
-        intakeEntries = storedEntries.isEmpty ? ConsumptionEntry.samples : storedEntries
+        if !storedEntries.isEmpty {
+            intakeEntries = storedEntries
+        } else if let snapshot = AppPersistenceStore.load(), !snapshot.intakeEntries.isEmpty {
+            intakeEntries = snapshot.intakeEntries
+        } else {
+            intakeEntries = ConsumptionEntry.samples
+        }
+        persistenceReady = true
+        persist()
     }
 
     var displayName: String { name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ? "Alex" : name }
@@ -137,9 +168,18 @@ final class AppModel {
     private func roundedWeight(_ value: Double) -> Double {
         (value * 10).rounded() / 10
     }
+
+    private func persistIfReady() {
+        guard persistenceReady else { return }
+        persist()
+    }
+
+    private func persist() {
+        AppPersistenceStore.save(AppSnapshot(model: self))
+    }
 }
 
-enum AppScreen {
+enum AppScreen: String, Codable {
     case quiz
     case analyzing
     case planRecommendation
@@ -148,7 +188,7 @@ enum AppScreen {
     case app
 }
 
-enum AppTab: String, CaseIterable, Identifiable {
+enum AppTab: String, CaseIterable, Identifiable, Codable {
     case home = "Home"
     case progress = "Progress"
     case track = "Track"
@@ -168,7 +208,7 @@ enum AppTab: String, CaseIterable, Identifiable {
     }
 }
 
-enum Goal: String, CaseIterable, Identifiable {
+enum Goal: String, CaseIterable, Identifiable, Codable {
     case lose = "Lose weight"
     case maintain = "Maintain weight"
     case habit = "Build a healthy habit"
@@ -176,14 +216,14 @@ enum Goal: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-enum Gender: String, CaseIterable, Identifiable {
+enum Gender: String, CaseIterable, Identifiable, Codable {
     case female = "Female"
     case male = "Male"
     case other = "Other"
     var id: String { rawValue }
 }
 
-enum AgeRange: String, CaseIterable, Identifiable {
+enum AgeRange: String, CaseIterable, Identifiable, Codable {
     case eighteenToTwentyFour = "18-24"
     case twentyFiveToThirtyFour = "25-34"
     case thirtyFiveToFortyFour = "35-44"
@@ -192,7 +232,7 @@ enum AgeRange: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-enum ActivityLevel: String, CaseIterable, Identifiable {
+enum ActivityLevel: String, CaseIterable, Identifiable, Codable {
     case sedentary = "Sedentary"
     case light = "Lightly active"
     case moderate = "Moderately active"
@@ -200,7 +240,7 @@ enum ActivityLevel: String, CaseIterable, Identifiable {
     var id: String { rawValue }
 }
 
-enum Experience: String, CaseIterable, Identifiable {
+enum Experience: String, CaseIterable, Identifiable, Codable {
     case beginner = "Beginner"
     case intermediate = "Intermediate"
     case advanced = "Advanced"
@@ -216,7 +256,7 @@ enum Experience: String, CaseIterable, Identifiable {
     }
 }
 
-enum FastingPlan: String, CaseIterable, Identifiable {
+enum FastingPlan: String, CaseIterable, Identifiable, Codable {
     case sixteenEight = "16:8"
     case eighteenSix = "18:6"
     case twentyFour = "20:4"
@@ -260,20 +300,20 @@ enum FastingPlan: String, CaseIterable, Identifiable {
     }
 }
 
-enum UnitSystem: String {
+enum UnitSystem: String, Codable {
     case metric
     case imperial
 
     var weightLabel: String { self == .metric ? "kg" : "lb" }
 }
 
-struct FastingSession {
+struct FastingSession: Codable {
     var active = false
     var startedAt: Date?
     var planHours = 16
 }
 
-enum Mood: String, CaseIterable, Identifiable {
+enum Mood: String, CaseIterable, Identifiable, Codable {
     case great = "Great"
     case good = "Good"
     case okay = "Okay"
@@ -325,7 +365,7 @@ enum ConsumptionCategory: String, CaseIterable, Identifiable, Codable, AppEnum {
     }
 }
 
-struct ConsumptionEntry: Identifiable, Hashable {
+struct ConsumptionEntry: Identifiable, Hashable, Codable {
     var id = UUID()
     var name: String
     var category: ConsumptionCategory
@@ -351,4 +391,63 @@ struct ConsumptionEntry: Identifiable, Hashable {
         ConsumptionEntry(name: "Greek yogurt", category: .snack, date: .now.addingTimeInterval(-4 * 3600)),
         ConsumptionEntry(name: "Lunch bowl", category: .meal, date: .now.addingTimeInterval(-6 * 3600))
     ]
+}
+
+private struct AppSnapshot: Codable {
+    var screen: AppScreen
+    var onboardingStep: Int
+    var name: String
+    var goal: Goal
+    var gender: Gender
+    var ageRange: AgeRange
+    var heightCm: Int
+    var weightKg: Double
+    var activity: ActivityLevel
+    var experience: Experience
+    var selectedPlan: FastingPlan
+    var activeTab: AppTab
+    var units: UnitSystem
+    var fasting: FastingSession
+    var water: Int
+    var weightLog: [Double]
+    var mood: Mood?
+    var intakeCategory: ConsumptionCategory
+    var intakeEntries: [ConsumptionEntry]
+
+    @MainActor
+    init(model: AppModel) {
+        screen = model.screen
+        onboardingStep = model.onboardingStep
+        name = model.name
+        goal = model.goal
+        gender = model.gender
+        ageRange = model.ageRange
+        heightCm = model.heightCm
+        weightKg = model.weightKg
+        activity = model.activity
+        experience = model.experience
+        selectedPlan = model.selectedPlan
+        activeTab = model.activeTab
+        units = model.units
+        fasting = model.fasting
+        water = model.water
+        weightLog = model.weightLog
+        mood = model.mood
+        intakeCategory = model.intakeCategory
+        intakeEntries = model.intakeEntries
+    }
+}
+
+private enum AppPersistenceStore {
+    private static let key = "nudgeflow.app.snapshot"
+
+    static func load() -> AppSnapshot? {
+        guard let data = UserDefaults.standard.data(forKey: key) else { return nil }
+        return try? JSONDecoder().decode(AppSnapshot.self, from: data)
+    }
+
+    static func save(_ snapshot: AppSnapshot) {
+        guard let data = try? JSONEncoder().encode(snapshot) else { return }
+        UserDefaults.standard.set(data, forKey: key)
+    }
 }

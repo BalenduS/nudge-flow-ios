@@ -2,7 +2,6 @@ import SwiftUI
 
 struct TrackView: View {
     @Bindable var model: AppModel
-    @Bindable var auth: AuthModel
 
     var body: some View {
         ScreenScroll(title: "Track") {
@@ -55,11 +54,9 @@ struct TrackView: View {
                 HStack(spacing: 10) {
                     TrackerButton(title: "Log item", prominent: true) {
                         model.addConsumption()
-                        syncIfSignedIn()
                     }
                     Button {
                         model.logWaterGlass()
-                        syncIfSignedIn()
                     } label: {
                         Label("Water", systemImage: "drop.fill")
                             .font(.system(size: 15, weight: .bold))
@@ -111,7 +108,6 @@ struct TrackView: View {
                     TrackerButton(title: "-") { model.adjustWater(by: -1) }
                     TrackerButton(title: "+", prominent: true) {
                         model.logWaterGlass()
-                        syncIfSignedIn()
                     }
                 }
             }
@@ -176,13 +172,6 @@ struct TrackView: View {
         case .okay: Color(red: 0.82, green: 0.58, blue: 0.06)
         case .low: Color(red: 0.66, green: 0.46, blue: 0.05)
         case .bad: Color(red: 0.48, green: 0.34, blue: 0.05)
-        }
-    }
-
-    private func syncIfSignedIn() {
-        guard auth.isSignedIn else { return }
-        Task {
-            await auth.sync(appModel: model)
         }
     }
 }

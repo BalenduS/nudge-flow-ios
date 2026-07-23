@@ -16,35 +16,25 @@ open AdminPortal/index.html
 
 Backend foundation:
 
-- Supabase schema draft: `supabase/migrations/001_admin_foundation.sql`
-- Account/sync bootstrap: `supabase/migrations/002_auth_sync_bootstrap.sql`
+- Supabase schema draft for a future backend/admin mode: `supabase/migrations/001_admin_foundation.sql`
+- Account/sync bootstrap kept for future reference: `supabase/migrations/002_auth_sync_bootstrap.sql`
 - Admin implementation plan: `docs/admin-portal.md`
 
-The portal is currently a dependency-free static dashboard with seed data. It models the real screens and workflows: overview, users, subscriptions, Learn CMS, notifications, privacy requests, audit log, and settings. Production wiring should happen after the Supabase project is created and the app has live credentials.
+The portal is currently a dependency-free static dashboard with seed data. The iOS app is now local-first with no required login, so the admin portal should focus on Learn content, notification templates, remote configuration, and aggregate/product operations unless explicit account sync is reintroduced later.
 
-## Supabase Setup
+## Local-First Data
 
-The iOS app now has an optional Supabase Auth + sync layer.
+Nudge & Flow does not require an account. Users can install the app and start tracking immediately.
 
-1. Create a Supabase project.
-2. Run the SQL migrations in order:
-   - `supabase/migrations/001_admin_foundation.sql`
-   - `supabase/migrations/002_auth_sync_bootstrap.sql`
-3. Copy your project URL and anon key into `NudgeFlow/Config/SupabaseConfig.swift`.
-4. In Supabase Auth, start with email/password enabled.
-5. Run the app, open Profile, and use Account to create or sign in.
+Current storage:
+- App profile/preferences, fasting state, water, weight, mood, and onboarding state are saved on-device.
+- Consumption entries are saved locally in the App Group store so the app and widget can share them.
+- Export Data remains the user-controlled way to take data out of the app.
 
-Current sync coverage:
-- Profile row with display name, email, units, and Free Plan.
-- Consumption entries from app/widget-backed local logs.
-- Manual "Sync Now" from Profile.
-- Automatic sync after Track tab consumption/water logs when signed in.
-
-Still to wire:
-- Fasting sessions.
-- Weight and mood entries.
-- Pulling remote history back down onto a new device.
-- Admin portal live queries and admin login.
+Future backup path:
+- Add optional iCloud/CloudKit backup and sync.
+- Keep it Apple-ID based instead of asking users to create a Nudge & Flow account.
+- Keep CSV export and delete-data controls visible.
 
 ## Most Exciting Feature Ideas
 
@@ -163,10 +153,10 @@ This can make pattern insights more meaningful without asking users to manually 
 ### 12. Account And Sync
 
 Recommended path:
-- Supabase Auth for app accounts, admin portal support, and cross-device sync.
-- Email/password first while the product is early.
-- Add Sign in with Apple before TestFlight/public release.
-- Keep a clear local-first privacy mode for users who do not want sync.
+- No mandatory app account.
+- On-device storage first.
+- Optional iCloud/CloudKit backup later for restore and Apple-device sync.
+- Consider Sign in with Apple only if a future web/admin user support workflow requires account identity.
 
 ### 13. Streaks With Compassion
 
@@ -196,38 +186,31 @@ Because the app contains sensitive lifestyle data:
 
 ### 16. Admin Portal
 
-Build a secure web admin portal for operating the product once accounts and sync exist.
+Build a secure web admin portal for operating content and product settings without requiring app user accounts.
 
 Recommended stack:
-- Supabase Auth for account management.
-- Postgres for user, fasting, consumption, subscription, and support data.
-- Row-Level Security for user-owned data.
+- Supabase Auth for admin staff only.
+- Postgres for Learn content, notification templates, remote config, announcements, and aggregate metrics.
+- Row-Level Security for admin/content roles.
 - Role-based access for admins and support users.
 - React + Vite or Next.js for the admin dashboard.
 
 Core admin screens:
-- Overview dashboard: active users, signups, retention, fasting starts, widget logs, exports, and notification opt-ins.
-- Users: searchable user list with account status, plan, signup date, last active date, and deletion/export status.
-- User detail: profile, fasting history, consumption logs, water/weight/mood history, device/widget status, and support notes.
-- Subscriptions: Free Plan/Premium state, trial status, renewal/cancellation state, payment provider IDs, and entitlement history.
+- Overview dashboard: app releases, content status, notification templates, exports, and aggregate opt-ins if analytics are added.
 - Content CMS: Learn articles, categories, featured article, read-time, publish status, and behavior-triggered recommendations.
-- Notifications: notification templates, stage nudges, reminder settings, delivery metrics, and opt-out rates.
-- Exports & privacy: user export requests, delete requests, consent records, and audit log.
-- Support tools: account lookup, account lock/disable, manual notes, and issue tags.
+- Notifications: notification templates, stage nudges, reminder copy, and remote config.
+- Privacy docs: data-locality copy, export/delete guidance, and consent language.
 
 Important guardrails:
-- Admins should not see sensitive health/lifestyle details by default; require explicit support reason to open detailed logs.
+- Admins should not see sensitive health/lifestyle details because personal app data is local by default.
 - Every admin action should be audit logged.
-- Never allow admins to view raw exports without permission controls.
-- Use soft-delete plus retention rules before permanent deletion.
-- Keep analytics aggregated unless a support workflow needs user-level detail.
+- Keep analytics aggregated and optional if added later.
 
 ## Near-Term Build Priority
 
-1. Create Supabase project and add credentials to `SupabaseConfig.swift`.
-2. Run migrations and test account creation from Profile.
-3. Add remote sync for fasting sessions, weight, mood, and water totals.
-4. Replace admin portal seed data with authenticated Supabase queries.
-5. Finish WidgetKit quick logging with favorite items.
-6. Build the fasting timeline.
-7. Add weekly review insights.
+1. Replace temporary local snapshots with SwiftData models for fasting, water, weight, mood, and consumption logs.
+2. Add optional iCloud/CloudKit backup and restore.
+3. Finish WidgetKit quick logging with favorite items.
+4. Build the fasting timeline.
+5. Add weekly review insights.
+6. Keep Supabase/admin portal focused on Learn CMS and notification templates.

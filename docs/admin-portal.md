@@ -2,13 +2,13 @@
 
 ## Priority
 
-The admin portal becomes production-ready once the Supabase project is live. The static portal in `AdminPortal/` is the UI and workflow scaffold; `supabase/migrations/001_admin_foundation.sql` and `supabase/migrations/002_auth_sync_bootstrap.sql` are the backend starting point.
+The admin portal should support content and product operations while the iOS app remains local-first with no required login. The static portal in `AdminPortal/` is the UI and workflow scaffold; the Supabase migrations are a future backend starting point if admin/content services move online.
 
 ## Backend Stack
 
-- Supabase Auth for account identity.
-- Postgres for app data.
-- Row-Level Security on all user-owned tables.
+- Supabase Auth for admin staff only.
+- Postgres for Learn content, notification templates, remote config, announcements, and aggregate/opt-in metrics.
+- Row-Level Security on admin/content tables.
 - `admin_memberships` for internal roles.
 - `admin_audit_log` for support/admin access records.
 
@@ -21,19 +21,16 @@ The admin portal becomes production-ready once the Supabase project is live. The
 
 ## Production Gates
 
-1. Create the Supabase project and run both migrations.
-2. Add Supabase URL and anon key to `NudgeFlow/Config/SupabaseConfig.swift`.
-3. Test iOS email/password account creation from Profile.
-4. Persist fasting sessions, weight, mood, and water summaries to Supabase.
-5. Replace portal seed data with Supabase queries.
-6. Add admin login.
-7. Gate sensitive user-detail views behind support reason.
-8. Write every sensitive admin action to `admin_audit_log`.
-9. Add export/delete request fulfillment workflows.
+1. Keep the iOS app local-first and account-free.
+2. Define which content/admin tables are needed for Learn CMS and notification templates.
+3. Replace portal seed data with Supabase queries for content/admin data only.
+4. Add admin login.
+5. Write every sensitive admin action to `admin_audit_log`.
+6. Add privacy/help copy management for local data, export, and delete guidance.
 
 ## Privacy Rules
 
 - Default dashboard metrics should be aggregate.
-- User-level fasting, mood, and consumption logs require support reason.
-- Export/delete requests need explicit status transitions.
-- Raw exports should be short-lived files, not permanent public URLs.
+- User-level fasting, mood, and consumption logs are not available to admins by default.
+- Export/delete flows should stay user-controlled inside the app.
+- Any future analytics must be aggregate and opt-in.

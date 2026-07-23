@@ -3,10 +3,8 @@ import UIKit
 
 struct ProfileView: View {
     @Bindable var model: AppModel
-    @Bindable var auth: AuthModel
     @State private var exportURL: URL?
     @State private var showingExportSheet = false
-    @State private var showingAuthSheet = false
     @State private var exportError: String?
 
     var body: some View {
@@ -34,16 +32,8 @@ struct ProfileView: View {
             }
 
             VStack(spacing: 0) {
-                SettingsRow(title: "Account", detail: auth.isSignedIn ? auth.email : "Sign in") {
-                    showingAuthSheet = true
-                }
-                SettingsRow(title: "Sync", detail: auth.isSignedIn ? "Now" : "Off", showsChevron: auth.isSignedIn) {
-                    guard auth.isSignedIn else {
-                        showingAuthSheet = true
-                        return
-                    }
-                    Task { await auth.sync(appModel: model) }
-                }
+                SettingsRow(title: "Privacy", detail: "On this iPhone", showsChevron: false) {}
+                SettingsRow(title: "Cloud Backup", detail: "Backlog", showsChevron: false) {}
                 SettingsRow(title: "Fasting Plan", detail: model.selectedPlan.rawValue) {
                     model.showPlanSelection(fromProfile: true)
                 }
@@ -55,34 +45,16 @@ struct ProfileView: View {
                     exportData()
                 }
                 SettingsRow(title: "Reminders", detail: nil) {}
-                SettingsRow(title: "Help & Support", detail: nil) {}
-                SettingsRow(title: auth.isSignedIn ? "Log Out" : "Create Account", destructive: auth.isSignedIn, showsDivider: false) {
-                    if auth.isSignedIn {
-                        Task { await auth.signOut() }
-                    } else {
-                        showingAuthSheet = true
-                    }
-                }
+                SettingsRow(title: "Help & Support", detail: nil, showsDivider: false) {}
             }
             .background(NFTheme.surface)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-
-            if let error = auth.errorMessage {
-                Text(error)
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(NFTheme.destructive)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, 2)
-            }
         }
         .sheet(isPresented: $showingExportSheet) {
             if let exportURL {
                 ShareSheet(items: [exportURL])
                     .presentationDetents([.medium, .large])
             }
-        }
-        .sheet(isPresented: $showingAuthSheet) {
-            AuthView(auth: auth, model: model)
         }
         .alert("Could not export data", isPresented: Binding(
             get: { exportError != nil },
