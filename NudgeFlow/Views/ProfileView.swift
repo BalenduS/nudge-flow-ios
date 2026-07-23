@@ -3,8 +3,7 @@ import UIKit
 
 struct ProfileView: View {
     @Bindable var model: AppModel
-    @State private var exportURL: URL?
-    @State private var showingExportSheet = false
+    @State private var exportFile: ExportFile?
     @State private var exportError: String?
 
     var body: some View {
@@ -50,11 +49,9 @@ struct ProfileView: View {
             .background(NFTheme.surface)
             .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
         }
-        .sheet(isPresented: $showingExportSheet) {
-            if let exportURL {
-                ShareSheet(items: [exportURL])
-                    .presentationDetents([.medium, .large])
-            }
+        .sheet(item: $exportFile) { file in
+            ShareSheet(items: [file.url])
+                .presentationDetents([.medium, .large])
         }
         .alert("Could not export data", isPresented: Binding(
             get: { exportError != nil },
@@ -68,12 +65,16 @@ struct ProfileView: View {
 
     private func exportData() {
         do {
-            exportURL = try DataExportService.makeCSVFile(model: model)
-            showingExportSheet = true
+            exportFile = ExportFile(url: try DataExportService.makeCSVFile(model: model))
         } catch {
             exportError = error.localizedDescription
         }
     }
+}
+
+private struct ExportFile: Identifiable {
+    let id = UUID()
+    let url: URL
 }
 
 private struct ShareSheet: UIViewControllerRepresentable {
